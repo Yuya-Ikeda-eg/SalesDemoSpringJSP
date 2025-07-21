@@ -1,5 +1,6 @@
 /**
  * 非同期処理のモジュールです.
+ * @author ikeda
  */
 
 let isFlashing = false;
