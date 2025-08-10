@@ -4,9 +4,9 @@
  */
 import { queueJob } from "./scheduler.js";
 
-handler = {
+const handler = {
 	get(target, key, receiver) {
-		const res = Reflect.get(arget, key, receiver);
+		const res = Reflect.get(target, key, receiver);
 		track(target, key);
 		return res;
 	},
@@ -17,7 +17,7 @@ handler = {
 	}
 }
 
-function reactive() {
+function reactive(target) {
 	return new Proxy(target, handler);
 } 
 

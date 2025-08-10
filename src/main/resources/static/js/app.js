@@ -6,7 +6,7 @@ import { nodeOps } from './nodeOps.js';
 import { createVNode, patch } from './renderer.js';
 import { reactive, computed, effect } from './reactive.js';
 
-function createApp() {
+function createApp(args) {
 	const {data, computed: computedData, methods, render} = args;
 	
 	const app = {};
@@ -36,7 +36,7 @@ function createMountFn(app, render) {
 	}
 }
 
-function createComputedData() {
+function createComputedData({ publicCtx }, computedData) {
 	const res = {};
 	for(const prop in computedData) {
 		const c = computed(computedData[prop], publicCtx);
@@ -45,7 +45,7 @@ function createComputedData() {
 	return res;
 }
 
-function createPublicCtx() {
+function createPublicCtx(app, rawData, computedData, methods) {
 	const ctx = { ...rawData, ...computedData, ...methods };
 	
 	return new Proxy(ctx, {

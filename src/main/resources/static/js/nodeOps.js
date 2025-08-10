@@ -3,8 +3,8 @@
  * @author ikeda
  */
 export const nodeOps = {
-	qs(selecter, scope) {
-		return (scope || document).querySelecter(selecter);
+	qs(selector, scope) {
+		return (scope || document).querySelector(selector);
 	},
 	create(type) {
 		return document.createElement(type);
