@@ -3,18 +3,20 @@
  * @author ikeda
  */
 import { nodeOps } from './nodeOps.js';
+
 import { createVNode, patch } from './renderer.js';
 import { reactive, computed, effect } from './reactive.js';
 
+/* 作成したDOMをオブジェクトとして返却するメソッド */
 function createApp(args) {
 	const {data, computed: computedData, methods, render} = args;
-	
+	/* 空のオブジェクト作成 */
 	const app = {};
-	
+	/* メソッドを格納 */
 	const rawData = data();
 	
 	app.publicCtx = createPublicCtx(app, rawData, computedData, methods);
-	
+	// メソッドをreactiveへ渡し、参照先をProxyへ束縛する
 	app.data = reactive(rawData);
 	
 	app.computed = createComputedData(app, computedData);
@@ -23,14 +25,17 @@ function createApp(args) {
 	
 	return app;
 }
-
+/* 仮想DOMで変更を反映したNodeを変更反映先へ渡すメソッド */
 function createMountFn(app, render) {
-	return function(selecter) {
-		const container = nodeOps.qs(selecter);
+	return function(selector) {
+		const container = nodeOps.qs(selector);
+		
 		app.vnode = createVNode();
 		effect(() => {
+			/* 仮想DOMとして値を保持 */
 			const nextVNode = render.call(app.publicCtx);
-			patch(app.vnode, nextVNode, container);
+			/* DOMの変更を反映させる */
+			patch(/* 変更前のDOM */app.vnode, /* 変更後のDOM */nextVNode, /* 変更反映先 */container);
 			app.vnode = nextVNode;
 		}, { lazy: true });	
 	}
@@ -45,7 +50,7 @@ function createComputedData({ publicCtx }, computedData) {
 	return res;
 }
 
-function createPublicCtx(app, rawData, computedData, methods) {
+function createPublicCtx(/* 空のオブジェクト */app, /* メソッド */rawData, /* 動的に変更する値 */computedData, methods) {
 	const ctx = { ...rawData, ...computedData, ...methods };
 	
 	return new Proxy(ctx, {
