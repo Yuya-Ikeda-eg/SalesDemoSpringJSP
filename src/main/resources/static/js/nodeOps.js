@@ -16,7 +16,7 @@ export const nodeOps = {
 		parent.appendChild(target);
 	},
 	html(target, value) {
-		target.innerHtml = value;
+		target.innerHTML = value;
 	},
 	on(target, eventType, callback) {
 		target.addEventListener(eventType, () => {
