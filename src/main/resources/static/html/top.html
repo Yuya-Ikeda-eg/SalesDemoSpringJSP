@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>トップページ</title>
+  <link rel="stylesheet" href="/SalesDemoSpringJSP/css/style.css">
+</head>
+<body>
+  <!-- header.js 読み込み先 -->
+  <div id="header_container"></div>
+  <!-- topMain.js 読み込み先 -->
+  <div id="top_main_container"></div>
+
+  <script type="module">
+    import { Header } from '/SalesDemoSpringJSP/js/header.js';
+    import { TopMain } from '/SalesDemoSpringJSP/js/topMain.js';
+
+    // header.js コンストラクタ呼び出し
+    new Header('#header_container');
+    // topMain.js コンストラクタ呼び出し
+    new TopMain('#top_main_container');
+  </script>
+</body>
+</html>

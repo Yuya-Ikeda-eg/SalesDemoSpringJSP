@@ -6,12 +6,17 @@ import { nodeOps } from './nodeOps.js';
 
 import { createVNode, patch } from './renderer.js';
 import { reactive, computed, effect } from './reactive.js';
+import { nextTick } from './scheduler.js';
+
+
 
 /* 作成したDOMをオブジェクトとして返却するメソッド */
 function createApp(args) {
 	const {data, computed: computedData, methods, render} = args;
+	
 	/* 空のオブジェクト作成 */
 	const app = {};
+	
 	/* メソッドを格納 */
 	const rawData = data();
 	
@@ -31,13 +36,24 @@ function createMountFn(app, render) {
 		const container = nodeOps.qs(selector);
 		
 		app.vnode = createVNode();
-		effect(() => {
+		const runner = effect(() => {
 			/* 仮想DOMとして値を保持 */
 			const nextVNode = render.call(app.publicCtx);
 			/* DOMの変更を反映させる */
 			patch(/* 変更前のDOM */app.vnode, /* 変更後のDOM */nextVNode, /* 変更反映先 */container);
 			app.vnode = nextVNode;
-		}, { lazy: true });	
+		}, { lazy: true });
+		
+		runner();
+		
+		// ★ マウント直後に自動ロード（クリック不要）
+	    queueMicrotask(() => {
+	      app.publicCtx.loadRestApi?.().then(() => {
+			  runner();
+		  });
+	    });
+	
+	    return app.publicCtx; // 返しておくと呼び出し側でも使いやすい
 	}
 }
 
@@ -60,7 +76,7 @@ function createPublicCtx(/* 空のオブジェクト */app, /* メソッド */ra
 			} else if(computedData.hasOwnProperty(key)) {
 				return Reflect.get(app.computed, key).value;
 			} else {
-				return Reflect(target, key, receiver);
+				return Reflect.get(target, key, receiver);
 			}
 		},
 		set(target, key, value, receiver) {

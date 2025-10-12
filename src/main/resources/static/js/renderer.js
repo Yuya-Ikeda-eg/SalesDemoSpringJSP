@@ -13,15 +13,14 @@ function createVNode(/* タグの種類 */type = '', /* 属性 */props = {}, /* 
 }
 /* DOMの変更を反映させるメソッド */
 function patch(/* 変更前のNode */n1, /* 変更後のNode */n2, /* 変更反映先 */container) {
-	let el;
-	/* 変更後のNodeのタグの種類が変更前と異なる場合 */
-	if(n1.type !== n2.type) {
-		/* 変更後のタグの種類を変更前に上書きする */
-		el = n2.el = nodeOps.create(n2.type);
-		nodeOps.append(container, el);
-	} else {
-		el = n2.el = n1.el;
-	}
+	 let el;
+	 if(n1.type !== n2.type) {
+	   el = n2.el = nodeOps.create(n2.type);
+	   nodeOps.append(container, el);
+	 } else {
+	   el = n2.el = n1.el;
+	 }
+ 
 	/* 変更後のNodeのタグの属性のオブジェクトのキーをループで取り出す */
 	for(const key in n2.props) {
 		/* 変更前の属性オブジェクトの値 */

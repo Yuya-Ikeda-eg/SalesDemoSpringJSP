@@ -7,14 +7,32 @@
 	<meta charset="UTF-8">
 	<title>トップページ</title>
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 		function setAction(formName,actionPath){
 				document.forms[formName].action = actionPath;
 			}
-	</script>
+	</script> -->
 </head>
 <body>
-	<!-- ヘッダー読み込み -->
+	<%-- 修正後 --%>
+	<%-- header.js読み込み --%>
+	<div id = "header_container"></div>
+	<%-- topMain.js読み込み --%>
+	<div id = "top_main_container"></div>
+
+	<script type="module">
+		import { Header } from '${pageContext.request.contextPath}/js/header.js';
+		import { TopMain } from '${pageContext.request.contextPath}/js/topMain.js';
+		// header.jsコンストラクタ呼び出し
+		new Header('#header_container');
+		// topMain.jsコンストラクタ呼び出し
+		new TopMain('#top_main_container');
+	</script>
+	
+	
+
+	<%-- 修正前 --%>
+	<%-- <!-- ヘッダー読み込み -->
 	<jsp:include page="/WEB-INF/views/header.jsp" />
 	<div class="container">
 		<!-- 新規登録 -->
@@ -79,6 +97,6 @@
 				</tbody>
 			</table>
 		</form>
-	</div>
+	</div> --%>
 </body>
 </html>
