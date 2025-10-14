@@ -1,5 +1,5 @@
 /**
- * 各モジュールを用いて動的ページを構成するためのモジュールです.
+ * 各モジュールを用いて各種ページをレンダリングするためのモジュールです.
  * @author ikeda
  */
 import { nodeOps } from './nodeOps.js';
@@ -46,14 +46,14 @@ function createMountFn(app, render) {
 		
 		runner();
 		
-		// ★ マウント直後に自動ロード（クリック不要）
+		// マウント(同期処理)直後にRestAPIを自動ロード（非同期処理）
 	    queueMicrotask(() => {
 	      app.publicCtx.loadRestApi?.().then(() => {
 			  runner();
 		  });
 	    });
 	
-	    return app.publicCtx; // 返しておくと呼び出し側でも使いやすい
+	    return app.publicCtx; 
 	}
 }
 

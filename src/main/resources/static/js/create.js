@@ -1,34 +1,33 @@
 /**
- * 発注画面のJS
+ * ヘッダーに係るjsファイルです.
+ * @author ikeda
  */
-//商品名が選択された時に商品カテゴリーを自動で更新する関数
-    function updateCategory(){
-        const productSelect = document.getElementById("selectProductName");
-        const categoryInput = document.getElementById("inputCategory");
-        const priceInput = document.getElementById("inputPrice");
-        //商品名のセレクトタグから選択したインデックスを取得する
-        const selectedOption = productSelect.options[productSelect.selectedIndex];
-        //ユーザが選択した商品名に紐づく商品カテゴリーを取得する
-        const category = selectedOption.getAttribute("data-category") || "";
+import { createApp, h } from './app.js';
 
-      	//ユーザが選択した商品名に紐づく商品カテゴリーを取得する
-        const price = selectedOption.getAttribute("data-price") || "";
 
-      	//選択した商品名に紐づく商品カテゴリーに更新する
-      	categoryInput.value = category;
-      	//選択した商品名に紐づく単価に更新する
-      	priceInput.value = price;
-    }
-
-    //注文日時を自動で表示させる関数
-    document.addEventListener("DOMContentLoaded",function(){
-        //本日の日付を取得する
-        const today = new Date();
-        //日付をYYYY-MM-DDフォーマット形式へ変換
-        const year = today.getFullYear();
-        const month = String(today.getMonth() + 1).padStart(2,'0');
-        const day = String(today.getDate()).padStart(2,'0');
-        const formattedDate = `${year}-${month}-${day}`;
-        //注文日時テーブルに設定
-        document.getElementById("orderDataInput").value = formattedDate;
-        });
+export class Create {
+	// コンストラクタ
+	constructor(rootSelecter) {
+		createApp({
+			data: () => ( {
+				productName: '商品名',
+				category: '商品カテゴリー',
+				quantity: '発注量',
+				price: '仕入額',
+				customerName: '顧客名',
+				country: '居住地',
+				orderDate: '注文日時'
+			}),
+			computed: {
+				
+			},
+			methods: {
+				
+			},
+			render() {
+				return h('div', { class: 'header' }, '遷移成功');
+			}
+		}).mount(rootSelecter);
+	}
+	
+}

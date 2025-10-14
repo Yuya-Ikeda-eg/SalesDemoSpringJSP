@@ -11,14 +11,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderDetailDto {
-    private Integer orderDetailId;
     private Integer quantity;
     private BigDecimal price;
     private OrderSummaryDto order;
 
     public static OrderDetailDto fromEntity(OrderDetails entity) {
         return new OrderDetailDto(
-            entity.getOrderDetailId(),
             entity.getQuantity(),
             entity.getPrice(),
             entity.getOrder() == null ? null : OrderSummaryDto.fromEntity(entity.getOrder())
