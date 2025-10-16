@@ -12,7 +12,7 @@ import { nextTick } from './scheduler.js';
 
 /* 作成したDOMをオブジェクトとして返却するメソッド */
 function createApp(args) {
-	const {data, computed: computedData, methods, render} = args;
+	const {data, computed: computedData, methods, mounted, render} = args;
 	
 	/* 空のオブジェクト作成 */
 	const app = {};
@@ -25,6 +25,8 @@ function createApp(args) {
 	app.data = reactive(rawData);
 	
 	app.computed = createComputedData(app, computedData);
+	
+	app.mounted = mounted;
 	
 	app.mount = createMountFn(app, render);
 	
@@ -48,9 +50,9 @@ function createMountFn(app, render) {
 		
 		// マウント(同期処理)直後にRestAPIを自動ロード（非同期処理）
 	    queueMicrotask(() => {
-	      app.publicCtx.loadRestApi?.().then(() => {
-			  runner();
-		  });
+	      if(typeof app.mounted === 'function') {
+			  app.mounted.call(app.publicCtx);
+		  }
 	    });
 	
 	    return app.publicCtx; 

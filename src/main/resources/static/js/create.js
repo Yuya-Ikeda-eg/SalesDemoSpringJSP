@@ -2,7 +2,7 @@
  * ヘッダーに係るjsファイルです.
  * @author ikeda
  */
-import { createApp, h } from './app.js';
+import { createApp, h } from './createApp.js';
 
 
 export class Create {

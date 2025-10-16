@@ -3,8 +3,14 @@
  * @author ikeda
  */
 import { toText, formatJPY, formatDateTime } from './util.js';
+import { CreateHeaderView } from './header.js';
 
 export function CreateIndexView(h, ctx) {
+	
+	/**
+	 * ヘッダーのNode
+	 */
+	const header = CreateHeaderView(h, ctx);
 	
 	 /**
 	 * 各種ボタンのNode
@@ -90,5 +96,5 @@ export function CreateIndexView(h, ctx) {
       [thead, tbody]
     );
 
-    return h('div', { class: 'container' }, [forms, table]);
+    return h('div', { class: 'container' }, [header, forms, table]);
 }

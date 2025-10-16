@@ -6,19 +6,13 @@
   <link rel="stylesheet" href="/SalesDemoSpringJSP/css/style.css">
 </head>
 <body>
-  <!-- header.js 読み込み先 -->
-  <div id="header_container"></div>
-  <!-- topMain.js 読み込み先 -->
-  <div id="top_main_container"></div>
+  <!-- appViews.js 読み込み先 -->
+  <div id="appViews_container"></div>
 
   <script type="module">
-    import { Header } from '/SalesDemoSpringJSP/js/header.js';
-    import { TopMain } from '/SalesDemoSpringJSP/js/topMain.js';
-
-    // header.js コンストラクタ呼び出し
-    new Header('#header_container');
+    import { appViews } from '/SalesDemoSpringJSP/js/appViews.js';
     // topMain.js コンストラクタ呼び出し
-    new TopMain('#top_main_container');
+    new appViews('#appViews_container');
   </script>
 </body>
 </html>

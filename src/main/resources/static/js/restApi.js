@@ -12,6 +12,7 @@ export async function loadJson(restApiUri, ctx) {
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const json = await res.json();
       ctx.products = Array.isArray(json) ? json : [];
+      ctx.loadedOnce = true;
     } catch (e) {
       console.error(e);
       ctx.error = 'データ取得に失敗しました。時間をおいて再度お試しください。';

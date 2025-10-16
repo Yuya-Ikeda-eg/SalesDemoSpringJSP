@@ -8,6 +8,10 @@
 	gap: 10px;
 }
 
+.header_container{
+	margin-bottom: 1.5px;
+}
+
 .header{
 	display: flex;
 	align-items: center;
@@ -29,7 +33,7 @@ body{
 
 .container{
 	display: flex;
-	padding: 10px;
+	flex-direction: column;
 }
 
 .button-left{

@@ -2,35 +2,19 @@
  * アプリケーションの画面表示に係るモジュールです.
  * @author ikeda
  */
-import { createApp, h } from './app.js';
+import { createApp, h } from './createApp.js';
 import { CreateIndexView } from './index.js';
 import { loadJson } from './restApi.js';
+import { datas } from './data.js'; 
 
-export class TopMain {
+export class appViews {
 	// コンストラクタ
 	constructor(rootSelector) {
-		const app = createApp({
-			data: () => ({
-				// 各種ボタン
-				create: '新規登録',
-				update: '更新',
-				delete: '削除',
-				// テーブルカラム
-				productName: '商品名',
-				category: '商品カテゴリー',
-				quantity: '発注量',
-				price: '仕入額',
-				orderDate: '注文日時',
-				customerName: '顧客名',
-				country: '居住地',
-				// JSON読み込み状態
-				loading: false,
-				error: null,
-				// RestAPIのJSON格納配列
-				products: [],
-				// RestAPIのパス
-				restApiUri: '/SalesDemoSpringJSP/api/products'
-			}),
+		createApp({
+			data: () => (
+				// データ一覧
+				datas
+			),
 			computed: {
 				
 			},
@@ -42,6 +26,12 @@ export class TopMain {
 				loadRestApi(restApiUri = this.restApiUri, ctx = this) {
 					return loadJson(restApiUri, ctx);
 				},
+			},
+			mounted() {
+				// RestAPIを初回自動ロード
+				if(!this.loadingOnce) {
+					this.loadRestApi();
+				}	
 			},
 			render() {
 			   //一覧表示画面を描画
