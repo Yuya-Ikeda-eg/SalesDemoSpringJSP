@@ -23,4 +23,10 @@ function formatDateTime(isoLike) {
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
 }
 
-export { toText, formatJPY, formatDateTime };
+/** 配列であるかどうか判定します */
+const isArray = Array.isArray;
+
+/** テキストであるかどうか判定します */
+const isText = (v) => typeof v === 'string' || typeof v === 'number';
+
+export { toText, formatJPY, formatDateTime, isArray, isText};

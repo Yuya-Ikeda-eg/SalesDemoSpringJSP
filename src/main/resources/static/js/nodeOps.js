@@ -3,44 +3,24 @@
  * @author ikeda
  */
 export const nodeOps = {
-	qs(selector, scope) {
-		return (scope || document).querySelector(selector);
-	},
-	create(type) {
-		return document.createElement(type);
-	},
-	setAttr(target, key, value) {
-		if(!target || !key || !value) {
-			return;
-		}
-		target.setAttribute(key, value);
-	},
-	append(parent, target) {
-		if(!parent || !target) {
-			return;
-		}
-		parent.appendChild(target);
-	},
-	remove(el) {
-		if(!el) {
-			return;
-		}
-		el.parentNode && el.parentNode.removeChild(el);
-	},
-	html(target, value) {
-		if(!target) {
-			return;
-		}
-		if(value === null || value === undefined) {
-			value = '';
-			return target.innerHTML = value;
-		} else {
-		  return target.innerHTML = value;	
-		} 
-	},
-	on(target, eventType, callback) {
-		target.addEventListener(eventType, () => {
-			callback();
-		});
-	}
-}
+  qs(sel, scope) { return (scope || document).querySelector(sel); },
+  create(type) { return document.createElement(type); },
+
+  setAttr(el, key, val) {
+    if (!el || !key) return;
+    if (val == null) el.removeAttribute(key);
+    else el.setAttribute(key, String(val)); // falsy も許容
+  },
+
+  append(p, c) { if (p && c) p.appendChild(c); },
+  remove(el) { if (el?.parentNode) el.parentNode.removeChild(el); },
+
+  html(el, v) { if (el) el.innerHTML = v == null ? '' : String(v); },
+
+  on(el, type, handler, opts) { el.addEventListener(type, handler, opts); },
+  off(el, type, handler, opts) { el.removeEventListener(type, handler, opts); }, 
+  replace(parent, oldEl, newEl) {
+    if (!parent || !oldEl || !newEl) return;
+    parent.replaceChild(newEl, oldEl);
+  }
+};

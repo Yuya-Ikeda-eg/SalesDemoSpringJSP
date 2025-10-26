@@ -81,11 +81,7 @@ function trigger(target, key) {
 		if(effect.computed) {
 			effect.dirty = true;
 		} else {
-			if(effect.lazy) {
-				queueJob(effect);
-			} else {
-				effect();
-			}
+			queueJob(effect);
 		}
 	});
 }

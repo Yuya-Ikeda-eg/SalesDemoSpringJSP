@@ -3,37 +3,20 @@
  * @author ikeda
  */
 import { toText, formatJPY, formatDateTime } from './util.js';
-import { CreateHeaderView } from './header.js';
+import { HeaderView } from './headerView.js';
+import { ButtonMenu } from './buttonMenuView.js';
 
-export function CreateIndexView(h, ctx) {
+export function IndexView(h, ctx) {
 	
 	/**
 	 * ヘッダーのNode
 	 */
-	const header = CreateHeaderView(h, ctx);
+	const header = HeaderView(h, ctx);
 	
-	 /**
-	 * 各種ボタンのNode
+	/**
+	 * ボタンメニューのNode
 	 */
-    const forms = h('div', {}, [
-      h('form', { method: 'post', name: 'createForm', action: 'create' }, [
-        h('input', { type: 'submit', value: ctx.create, class: 'button button-left' })
-      ]),
-      h('form', { method: 'post', name: 'updateDeleteForm' }, [
-        h('input', {
-          type: 'submit',
-          value: ctx.update,
-          class: 'button',
-          onClick: () => ctx.setAction('updateDeleteForm', 'update')
-        }),
-        h('input', {
-          type: 'submit',
-          value: ctx.delete,
-          class: 'button',
-          onClick: () => ctx.setAction('updateDeleteForm', 'delete')
-        })
-      ])
-    ]);
+	const buttonMenu = ButtonMenu(h, ctx);
 
     /**
 	* テーブルヘッダのNode 
@@ -96,5 +79,5 @@ export function CreateIndexView(h, ctx) {
       [thead, tbody]
     );
 
-    return h('div', { class: 'container' }, [header, forms, table]);
+    return h('div', { class: 'container' }, [header, buttonMenu, table]);
 }

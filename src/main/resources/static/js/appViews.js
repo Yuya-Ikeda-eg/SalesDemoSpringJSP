@@ -3,9 +3,11 @@
  * @author ikeda
  */
 import { createApp, h } from './createApp.js';
-import { CreateIndexView } from './index.js';
+import { IndexView } from './indexView.js';
+import { CreateView } from './createView.js';
 import { loadJson } from './restApi.js';
-import { datas } from './data.js'; 
+import { datas } from './data.js';
+import { changeViews } from './route.js';
 
 export class appViews {
 	// コンストラクタ
@@ -19,13 +21,14 @@ export class appViews {
 				
 			},
 			methods: {
-				setAction(formName, actionPath) {
-					document.forms[formName].action = actionPath;
-				},
 				// RestAPIから一覧データを取得
 				loadRestApi(restApiUri = this.restApiUri, ctx = this) {
 					return loadJson(restApiUri, ctx);
 				},
+				// SPAページ描画変更
+				navigate(route = this.route, ctx = this) {
+					changeViews(route, ctx);
+				}
 			},
 			mounted() {
 				// RestAPIを初回自動ロード
@@ -34,8 +37,16 @@ export class appViews {
 				}	
 			},
 			render() {
-			   //一覧表示画面を描画
-		       return CreateIndexView(h, this);
+			   // 一覧表示画面を描画
+			   if(this.route === 'index') {
+				 return IndexView(h, this);  
+			   }
+			   
+			   // 新規登録画面を描画
+			   if(this.route === 'create') {
+				 return CreateView(h, this);
+			   }
+		       
 		     }
 	    }).mount(rootSelector); 
   	}

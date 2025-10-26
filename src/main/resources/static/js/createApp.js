@@ -10,6 +10,7 @@ import { nextTick } from './scheduler.js';
 
 
 
+
 /* 作成したDOMをオブジェクトとして返却するメソッド */
 function createApp(args) {
 	const {data, computed: computedData, methods, mounted, render} = args;
@@ -37,7 +38,7 @@ function createMountFn(app, render) {
 	return function(selector) {
 		const container = nodeOps.qs(selector);
 		
-		app.vnode = createVNode();
+		app.vnode = null;
 		const runner = effect(() => {
 			/* 仮想DOMとして値を保持 */
 			const nextVNode = render.call(app.publicCtx);

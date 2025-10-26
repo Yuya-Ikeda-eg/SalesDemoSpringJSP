@@ -9,6 +9,8 @@ export const datas = {
 	create: '新規登録',
 	update: '更新',
 	delete: '削除',
+	// ページ遷移
+	route: 'index',
 	// テーブルカラム
 	productName: '商品名',
 	category: '商品カテゴリー',
